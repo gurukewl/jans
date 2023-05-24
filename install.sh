@@ -61,7 +61,10 @@ running_services_location() {
     echo "Readarr: http://$host_ip:8787/"
     echo "Prowlarr: http://$host_ip:9696/"
     echo "Bazarr: http://$host_ip:6767/"
-    echo "$media_service: http://$host_ip:$media_service_port/"
+    echo "Doublecommander: http://$host_ip:3000/"
+    echo "Kavita: http://$host_ip:5500/"
+    echo "Navidrome: http://$host_ip:4533/"
+    echo "Jellyfin: http://$host_ip:8096/"
     echo "Portainer: http://$host_ip:9000/"
 }
 
@@ -119,79 +122,7 @@ if [ "$media_folder_correct" == "n" ]; then
     send_error_message "Media folder is not correct. Please, fix it and run the script again"
 fi
 
-# Setting the preferred media service
-echo
-echo
-echo
-echo "Time to choose your media service."
-echo "Your media service is the one responsible for serving your files to your network."
-echo "By default, YAMS support 3 media services:"
-echo "- jellyfin (recommended, easier)"
-echo "- emby"
-echo "- plex (advanced, always online)"
-read -p "Choose your media service [jellyfin]: " media_service
-media_service=${media_service:-"jellyfin"}
-media_service=$(echo "$media_service" | sed -e 's/\(.*\)/\L\1/')
-
 media_service_port=8096
-if [ "$media_service" == "plex" ]; then
-    media_service_port=32400
-fi
-
-if echo "emby plex jellyfin" | grep -qw "$media_service"; then
-    echo "YAMS is going to install \"$media_service\" on port \"$media_service_port\""
-else
-    send_error_message "\"$media_service\" is not supported by YAMS. Are you sure you chose the correct service?"
-fi
-
-# Adding the VPN
-echo
-echo
-echo
-echo "Time to set up the VPN."
-echo "You can check the supported VPN list here: https://yams.media/advanced/vpn."
-read -p "Do you want to configure a VPN? [Y/n]: " setup_vpn
-setup_vpn=${setup_vpn:-"y"}
-
-if [ "$setup_vpn" == "y" ]; then
-    read -p "What's your VPN service? (with spaces) [mullvad]: " vpn_service
-    vpn_service=${vpn_service:-"mullvad"}
-    echo
-    echo "You should read $vpn_service's documentation in case it has different configurations for username and password."
-    echo "The documentation for $vpn_service is here: https://github.com/qdm12/gluetun/wiki/${vpn_service// /-}"
-    echo
-    read -p "What's your VPN username? (without spaces): " vpn_user
-
-    unset vpn_password
-    charcount=0
-    prompt="What's your VPN password? (if you are using mullvad, just enter your username again): "
-    while IFS= read -p "$prompt" -r -s -n 1 char
-    do
-        if [[ $char == $'\0' ]]
-        then
-            break
-        fi
-        if [[ $char == $'\177' ]] ; then
-            if [ $charcount -gt 0 ] ; then
-                charcount=$((charcount-1))
-                prompt=$'\b \b'
-                vpn_password="${vpn_password%?}"
-            else
-                prompt=''
-            fi
-        else
-            charcount=$((charcount+1))
-            prompt='*'
-            vpn_password+="$char"
-        fi
-    done
-    echo
-
-    echo "What country do you want to use?"
-    echo "If you are using: NordVPN, Perfect Privacy, Private Internet Access, VyprVPN, WeVPN or Windscribe, then input a region"
-    read -p "You can check the countries/regions list for your VPN here: https://github.com/qdm12/gluetun/wiki/$vpn_service#servers [brazil]: " vpn_country
-    vpn_country=${vpn_country:-"brazil"}
-fi
 
 echo "Configuring the docker-compose file for the user \"$username\" on \"$install_location\"..."
 # ============================================================================================
@@ -215,34 +146,12 @@ sed -i -e "s/<your_PGID>/$pgid/g" "$filename"
 # Set media_folder
 sed -i -e "s;<media_folder>;$media_folder;g" "$filename"
 
-# Set media_service
-sed -i -e "s;<media_service>;$media_service;g" "$filename"
-if [ "$media_service" == "plex" ]; then
-    sed -i -e "s;#network_mode: host # plex;network_mode: host # plex;g" "$filename"
-fi
-
 # Set config folder
 sed -i -e "s;<install_location>;$install_location;g" "$filename"
-
-# Set VPN
-if [ "$setup_vpn" == "y" ]; then
-    sed -i -e "s;<vpn_service>;$vpn_service;g" "$filename"
-    sed -i -e "s;<vpn_user>;$vpn_user;g" "$filename"
-    sed -i -e "s;<vpn_country>;$vpn_country;g" "$filename"
-    sed -i -e "s;<vpn_password>;$vpn_password;g" "$filename"
-    sed -i -e "s;#network_mode: \"service:gluetun\";network_mode: \"service:gluetun\";g" "$filename"
-    sed -i -e "s;ports: # qbittorrent;#port: # qbittorrent;g" "$filename"
-    sed -i -e "s;- 8080:8080 # qbittorrent;#- 8080:8080 # qbittorrent;g" "$filename"
-    sed -i -e "s;#- 8080:8080/tcp # gluetun;- 8080:8080/tcp # gluetun;g" "$filename"
-    if echo "nordvpn perfect privacy private internet access vyprvpn wevpn windscribe" | grep -qw "$vpn_service"; then
-        sed -i -e "s;SERVER_COUNTRIES;SERVER_REGIONS;g" "$filename"
-    fi
-fi
 
 # Set yams script
 sed -i -e "s;<filename>;$filename;g" yams
 sed -i -e "s;<install_location>;$install_location;g" yams
-
 
 send_success_message "Everything installed correctly! 🎉"
 

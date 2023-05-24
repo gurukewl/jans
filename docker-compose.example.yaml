@@ -1,10 +1,10 @@
 version: "3"
 
 services:
-  # <media_service> is used to serve your media to the client devices
-  <media_service>:
-    image: lscr.io/linuxserver/<media_service>
-    container_name: <media_service>
+  # jellyfin is used to serve your media to the client devices
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
     #network_mode: host # plex
     environment:
       - PUID=<your_PUID>
@@ -13,14 +13,14 @@ services:
     volumes:
       - <media_folder>/movies:/data/movies
       - <media_folder>/tvshows:/data/tvshows
-      - <install_location>/config/<media_service>:/config
+      - <install_location>/config/jellyfin:/config
     ports:
       - 8096:8096
     restart: unless-stopped
 
   # qBitorrent is used to download torrents
   qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent
+    image: cr.hotio.dev/hotio/qbittorrent
     container_name: qbittorrent
     environment:
       - PUID=<your_PUID>
@@ -32,7 +32,6 @@ services:
     restart: unless-stopped
     ports: # qbittorrent
       - 8080:8080 # qbittorrent
-    #network_mode: "service:gluetun"
 
   # Sonarr is used to query, add downloads to the download queue and index TV shows
   # https://sonarr.tv/
@@ -128,28 +127,45 @@ services:
       - 9696:9696
     restart: unless-stopped
 
-  # Gluetun is our VPN, so you can download torrents safely
-  gluetun:
-    image: qmcgaw/gluetun
-    container_name: gluetun
-    cap_add:
-      - NET_ADMIN
-    devices:
-      - /dev/net/tun:/dev/net/tun
-    ports:
-      - 8888:8888/tcp # HTTP proxy
-      - 8388:8388/tcp # Shadowsocks
-      - 8388:8388/udp # Shadowsocks
-      #- 8080:8080/tcp # gluetun
-    volumes:
-      - <install_location>/config/gluetun:/config
+  # double commander is our filebrowser
+  doublecommander:
+    image: ghcr.io/linuxserver/doublecommander
+    container_name: doublecommander
     environment:
-      - VPN_SERVICE_PROVIDER=<vpn_service>
-      - VPN_TYPE=openvpn
-      - OPENVPN_USER=<vpn_user>
-      - OPENVPN_PASSWORD=<vpn_password>
-      - SERVER_COUNTRIES=<vpn_country>
-      - OPENVPN_CIPHERS=AES-256-GCM
+      - PUID=<your_PUID>
+      - PGID=<your_PGID>
+    volumes:
+      - <install_location>/config/doublecommander:/config
+      - <media_folder>:/data
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+
+  # Kavita serves the books and comics 
+  kavita:
+    image: kizaing/kavita:latest
+    environment:
+      - PUID=<your_PUID>
+      - PGID=<your_PGID>
+    volumes:
+      - <install_location>/config/kavita:/kavita/config
+      - <media_folder>/books:/manga
+    ports:
+      - "5500:5000"
+    restart: unless-stopped
+
+  # navidrome serves the music 
+  navidrome:
+    image: deluan/navidrome:latest
+    ports:
+      - 4533:4533
+    environment:
+      ND_SCANSCHEDULE: 1h
+      ND_LOGLEVEL: info  
+      ND_BASEURL: ""
+    volumes:
+      - <install_location>/config/navidrome:/data
+      - <media_folder>/music:/music:ro
     restart: unless-stopped
 
   # Portainer helps debugging and monitors the containers
