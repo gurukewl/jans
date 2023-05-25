@@ -144,6 +144,7 @@ services:
   # Kavita serves the books and comics 
   kavita:
     image: kizaing/kavita:latest
+    container_name: kavita
     environment:
       - PUID=<your_PUID>
       - PGID=<your_PGID>
@@ -157,6 +158,7 @@ services:
   # navidrome serves the music 
   navidrome:
     image: deluan/navidrome:latest
+    container_name: navidrome
     ports:
       - 4533:4533
     environment:
@@ -171,6 +173,7 @@ services:
   # Minio is the document storage similar to AWS S3
   minio:
     image: minio/minio:latest
+    container_name: minio
     ports:
       - "9009:9000"
       - "9099:9099"

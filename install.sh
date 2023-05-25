@@ -78,9 +78,9 @@ running_services_location() {
     echo "Kavita: http://$host_ip:5500/"
     echo "Navidrome: http://$host_ip:4533/"
     echo "Jellyfin: http://$host_ip:8096/"
-    if [ "$setup_minio" == "y" ]; then
+#    if [ "$setup_minio" == "y" ]; then
     echo "MinIO: https://$host_ip:9000/"
-    fi
+#    fi
 }
 
 # ============================================================================================
