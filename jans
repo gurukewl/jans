@@ -1,0 +1,74 @@
+#!/bin/bash
+set -euo pipefail
+
+
+dc="docker-compose -f <filename>"
+
+option=${1:-"--help"}
+
+help() {
+   echo "jans - Just Another Network Server"
+   echo
+   echo "Usage: jans [--help|restart|stop|start|status]"
+   echo "options:"
+   echo "--help     displays this help message"
+   echo "restart    restarts jans services"
+   echo "stop       stops all jans services"
+   echo "start      starts jans services"
+   echo "update     updates jans services"     
+   echo "destroy    destroy jans services so you can start from scratch"
+}
+
+send_success_message() {
+    echo -e $(printf "\e[32m$1\e[0m")
+}
+
+send_error_message() {
+    echo -e $(printf "\e[31m$1\e[0m")
+    exit 255
+}
+
+if [ $option == "--help" ]; then
+    help
+    exit 0
+fi
+
+if [ $option == "restart" ]; then
+    $dc stop && $dc up -d
+    echo "jans is starting. Wait 1 min until all the services are up and running..."
+    exit 0
+fi
+
+if [ $option == "stop" ]; then
+    $dc stop
+    exit 0
+fi
+
+if [ $option == "start" ]; then
+    $dc up -d
+    echo "jans is starting. Wait 1 min until all the services are up and running..."
+    exit 0
+fi
+
+if [ $option == "update" ]; then
+    $dc pull 
+    echo "jans services are updating and restart. Wait 1 min until all the services are up and running..."
+    $dc up -d --remove-orphans
+    yes | docker image prune -f
+    echo "Orphan images are cleaned from system..."
+    exit 0
+fi
+
+if [ $option == "destroy" ]; then
+    echo
+    echo
+    read -p "Are you sure you want to destroy all your jans services? THIS IS NOT RECOVERABLE! ⚠️ ️🚨 [y/N]: " destroy_now
+    destroy_now=${destroy_now:-"n"}
+    if [ $destroy_now == "y" ]; then
+        $dc down
+        echo
+        echo
+        echo "jans services were destroyed. To restart, run: "
+        echo "\$ jans start"
+    fi
+fi

@@ -168,6 +168,20 @@ services:
       - <media_folder>/music:/music:ro
     restart: unless-stopped
 
+  # Minio is the document storage similar to AWS S3
+  minio:
+    image: minio/minio:latest
+    ports:
+      - "9000:9000"
+      - "9099:9099"
+    environment:
+      MINIO_ROOT_USER: <minio_user>
+      MINIO_ROOT_PASSWORD: <minio_password>
+    volumes:
+      - <media_folder>/minio/data:/data
+    command: server --address ":9099" --console-address ":9000" /data
+    restart: unless-stopped
+
   # Portainer helps debugging and monitors the containers
   portainer:
     image: portainer/portainer-ce
@@ -189,3 +203,5 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
+
+

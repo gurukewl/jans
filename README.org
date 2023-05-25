@@ -1,4 +1,10 @@
-#+title: JANS: Just Another Network Server
+#+title: YAMS: Yet Another Media Server
+
+@@html:<img src="https://visitor-badge.laobi.icu/badge?page_id=rogs.yams" alt="visitor badge"/>@@
+
+This is a highly opinionated media server.
+
+Website: [[https://yams.media][https://yams.media]]
 
 * Description
 :PROPERTIES:
@@ -10,18 +16,16 @@ This script installs the following software:
 - [[https://lidarr.audio][Lidarr]]
 - [[https://readarr.com/][Readarr]]
 - [[https://jellyfin.org/][Jellyfin]]
-- [[https://min.io/][MinIO]]
-- [[https://www.kavitareader.com/][Kavita]
-- [[https://www.navidrome.org/][Navidrome]
-- [[https://doublecmd.sourceforge.io/][Doublecommander]]
-- [[https://www.qbittorrent.org/][qBittorrent- Vuetorrent UI]]
+- [[https://emby.media/][Emby]]
+- [[https://www.plex.tv/][Plex]]
+- [[https://www.qbittorrent.org/][qBittorrent]]
 - [[https://www.bazarr.media/][Bazarr]]
 - [[https://github.com/Prowlarr/Prowlarr][Prowlarr]]
+- [[https://github.com/qdm12/gluetun][gluetun]]
 - [[https://www.portainer.io/][Portainer]]
 
-With this combination, you can create a fully functional network server that is going to download,
-categorize, subtitle and serve your favorite shows, movies, audio and books as well as use as a document 
-store on your network 
+With this combination, you can create a fully functional media server that is going to download,
+categorize, subtitle and serve your favorite shows, movies, audio and books.
 
 * Features
 :PROPERTIES:
@@ -64,21 +68,28 @@ Before installing, make sure you have:
   + ~/srv/media/blackhole~: For your torrents blackhole
 - *A regular user to run and own the media files*: You shouldn't use ~root~ for this user, but I'm not
   your father, nothing is going to stop you lol
+- *A VPN service (optional but STRONGLY recommended):* If you can, choose one from [[https://yams.media/advanced/vpn#official-supported-vpns][this list]]. The VPN I
+  always recommend is [[https://mullvad.net/en/][Mullvad]] because:
+  + They don’t require your email or information to create a new account.
+  + It’s simple to configure.
+  + They only have monthly subscriptions, so you can leave them whenever you want.
+  + You can pay with crypto.
 
 * To run
 :PROPERTIES:
 :ID:       a0417c61-3fd8-40a0-9385-6c5aaed37337
 :END:
+
 #+begin_src bash
-$ git clone https://gitlab.com/rogs/jans.git
-$ cd jans
+$ git clone https://gitlab.com/rogs/yams.git
+$ cd yams
 $ ./install.sh
 #+end_src
 
 And follow the instructions.
 
 
-So far, this is tested in Debian 11 and Ubuntu 22.04.
+So far, I've tested this in Debian 11 and Ubuntu 22.04.
 
 * Usage
 :PROPERTIES:
@@ -97,6 +108,35 @@ stop       stops all yams services
 start      starts yams services
 destroy    destroy yams services so you can start from scratch
 #+end_src
+* How to configure?
+:PROPERTIES:
+:ID:       242b8dfa-82ab-4d86-b3ea-0a0af6cf3ad5
+:END:
+
+Go to [[https://yams.media/config/][https://yams.media/config/]] and follow the config instructions
+
+* Donations
+:PROPERTIES:
+:ID:       992fb05d-c171-4ba9-9207-3dd1d467656e
+:END:
+If you *really* wish to donate, first I would like to say thank you from the bottom of my heart! ❤️ Second, I
+would prefer you donate to any of the projects used in this script.
+
+They are the ones doing the real work, I just created a docker-compose file and a couple of bash scripts:
+
+- [[https://www.linuxserver.io/donate][linuxserver.io donations page]]
+- [[https://sonarr.tv/donate][Sonarr donations page]]
+- [[https://radarr.video/donate][Radarr donations page]]
+- [[https://opencollective.com/jellyfin][Jellyfin donations page]]
+- [[https://emby.media/premiere.html][Emby premier page]] (Recommended! I personally use this service)
+- [[https://www.plex.tv/plex-pass/][Plex pass page]]
+- [[https://www.qbittorrent.org/donate][qBittorrent donations page]]
+- [[https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=XHHRWXT9YB7WE&source=url][Bazarr donations page]]
+- [[https://www.paypal.me/qmcgaw][gluetun donations page]]
+- [[https://opencollective.com/Prowlarr#sponsor][Prowlarr donations page]]
+
+Just let them know YAMS sent you there 😎
+
 * todo [3/17]
 :PROPERTIES:
 :ID:       eba4712e-fa8a-42c8-bc32-b593141c99a4
@@ -120,3 +160,30 @@ destroy    destroy yams services so you can start from scratch
 - [ ] Check [[https://github.com/Flemmarr/Flemmarr][Flemarr]].
 - [ ] Check usenet.
 - [ ] Check [[https://github.com/hrfee/jfa-go][Jellyfin Accounts Go]].
+
+* Special thanks
+:PROPERTIES:
+:ID:       b0a86edc-dc4f-4ac2-908c-fd08f1d2f99c
+:END:
+- [[https://info.linuxserver.io/][linuxserver.io]] for their amazing docker images
+- [[https://sonarr.tv/][Sonarr]]
+- [[https://radarr.video/][Radarr]]
+- [[https://jellyfin.org/][Jellyfin]]
+- [[https://emby.media/][Emby]]
+- [[https://www.plex.tv/][Plex]]
+- [[https://www.qbittorrent.org/][qBittorrent]]
+- [[https://www.bazarr.media/][Bazarr]]
+- [[https://github.com/Prowlarr/Prowlarr][Prowlarr]]
+- [[https://www.portainer.io/][Portainer]]
+- My friends:
+  + [[https://github.com/xploshioOn][xploshioOn]]
+  + [[https://github.com/norlis][norlis]]
+  + [[https://github.com/isaac152][isaac152]]
+  For giving me ideas and helping me test the script
+
+** And finally:
+:PROPERTIES:
+:ID:       126d4a9c-08a5-47f4-bffb-61b251ef394c
+:END:
+- You 🫵, for being such an amazing human being, checking out my repo and (hopefully!) using it on your
+  media server. Thank you! 🙇
