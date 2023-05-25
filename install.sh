@@ -154,7 +154,7 @@ echo
 read -p "Do you want to install MinIO? [Y/n]: " setup_minio
 setup_minio=${setup_minio:-"y"}
 
-if [ "$setup_minio" == "y" ]; then
+if [ "$setup_minio" == "Y"]||["$setup_minio" == "y" ]; then
     echo
     echo
     read -p "Enter your MinIO User (without spaces) [adminitrator]: " minio_user
