@@ -53,12 +53,6 @@ if [ "$CHANGE_HOSTNAME" == "y" ]; then
     host_name=${host_name:-"jans"}
 fi
 
-LINUX=$(lsb_release -a 2>/dev/null | grep Distributor | sed "s/Distributor ID:\t//")
-RELEASE=$(lsb_release -a 2>/dev/null | grep Codename | sed "s/Codename:\t//")
-
-echo "Linux is $LINUX"
-echo "Release is $RELEASE"
-
 check_dependencides() {
     if command -v $1 &> /dev/null; then
         send_success_message "$1 exists ✅ "
