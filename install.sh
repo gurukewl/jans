@@ -198,10 +198,10 @@ sed -i -e "s;<media_folder>;$media_folder;g" "$filename"
 sed -i -e "s;<install_location>;$install_location;g" "$filename"
 
 # Set minio
-if [ "$setup_minio" == "y" ]; then
+#if [ "$setup_minio" == "y" ]; then
     sed -i -e "s;<minio_user>;$minio_user;g" "$filename"
     sed -i -e "s;<minio_password>;$minio_password;g" "$filename"
-fi
+#fi
 
 # Set jans script
 sed -i -e "s;<filename>;$filename;g" jans
