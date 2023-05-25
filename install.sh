@@ -230,7 +230,7 @@ chmod 666 /etc/hostname
 send_success_message "Everything installed correctly! 🎉"
 
 echo "Running the server..."
-echo "This is going to take a while..."
+echo "This is going to take a while... "
 
 docker-compose -f "$filename" up -d
 # ============================================================================================
