@@ -37,7 +37,7 @@ In no particular order:
   subtitles in the languages you choose, if they are available.
 - *Support for Web, Android, iOS, Android TV and whatever that can support Jellyfin*: Since we are
   leveraging from Jellyfin, you should be able to watch your favorite media almost anywhere.
-- *Support for Document storage like Amazon S3 via MInIO*: Since we are
+- *Support for Document storage like Amazon S3 via MinIO*: Since we are
   leveraging from MinIO, you should be able to store Documents, photos and your pictures on your self hosted cloud storage.
   
 * Dependencies
