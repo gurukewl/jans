@@ -1,8 +1,6 @@
-#+title: YAMS: Yet Another Media Server
+#+title: JANS: Just Another Network Server
 
-@@html:<img src="https://visitor-badge.laobi.icu/badge?page_id=rogs.yams" alt="visitor badge"/>@@
-
-This is a highly opinionated media server.
+This is a highly customized network server with media functionality.
 
 * Description
 :PROPERTIES:
@@ -57,7 +55,7 @@ works in Debian and Ubuntu!)
 :END:
 Before installing, make sure you have:
 - *An installation location*: The script is going to ask you for a install location, but it will default
-  to ~/opt/yams~. Just make sure your current user has permissions to write on the selected directory.
+  to ~/opt/jams~. Just make sure your current user has permissions to write on the selected directory.
 - *A media folder*: This is the folder where all your files are going to be downloaded and categorized. If
   you choose ~/srv/media~, the script is going to create the following folders:
   + ~/srv/media/tv~: For your TV shows
@@ -92,16 +90,16 @@ So far, I've tested this in Debian 11 and Ubuntu 22.04.
 When the script finishes installing without issues, just run:
 #+begin_src
 $ yams
-yams - Yet Another Media Server
+jans - Just Another Network Server
 
 Usage: jans [--help|restart|stop|start]
 options:
 --help     displays this help message
-restart    restarts yams services
-stop       stops all yams services
-start      starts yams services
-update     updates yams srvices
-destroy    destroy yams services so you can start from scratch
+restart    restarts jans services
+stop       stops all jans services
+start      starts jans services
+update     updates jans srvices
+destroy    destroy jans services so you can start from scratch
 #+end_src
 * How to configure?
 :PROPERTIES:
