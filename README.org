@@ -89,7 +89,7 @@ So far, I've tested this in Debian 11 and Ubuntu 22.04.
 :END:
 When the script finishes installing without issues, just run:
 #+begin_src
-$ yams
+$ jans
 jans - Just Another Network Server
 
 Usage: jans [--help|restart|stop|start|update|destroy]
