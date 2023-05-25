@@ -75,8 +75,8 @@ Before installing, make sure you have:
 :END:
 
 #+begin_src bash
-$ git clone https://gitlab.com/rogs/yams.git
-$ cd yams
+$ git clone https://gitlab.com/rogs/jans.git
+$ cd jans
 $ ./install.sh
 #+end_src
 
@@ -94,18 +94,17 @@ When the script finishes installing without issues, just run:
 $ yams
 yams - Yet Another Media Server
 
-Usage: yams [--help|restart|stop|start]
+Usage: jans [--help|restart|stop|start]
 options:
 --help     displays this help message
 restart    restarts yams services
 stop       stops all yams services
 start      starts yams services
+update     updates yams srvices
 destroy    destroy yams services so you can start from scratch
 #+end_src
 * How to configure?
 :PROPERTIES:
 :ID:       242b8dfa-82ab-4d86-b3ea-0a0af6cf3ad5
 :END:
-
-Go to [[https://yams.media/config/][https://yams.media/config/]] and follow the config instructions
 
