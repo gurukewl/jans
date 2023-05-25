@@ -92,9 +92,9 @@ echo "Checking prerequisites..."
 check_dependencides "docker"
 check_dependencides "docker-compose"
 
-if [[ "$EUID" = 0 ]]; then
-    send_error_message "jans has to run without sudo! Please, run it again with regular permissions"
-fi
+# if [[ "$EUID" = 0 ]]; then
+#     send_error_message "jans has to run without sudo! Please, run it again with regular permissions"
+# fi
 
 # ============================================================================================
 
@@ -142,44 +142,36 @@ media_service_port=8096
 
 # Adding the minio document store
 echo
-echo
-echo
 echo "Time to set up the MinIO in standalone mode."
-echo 
-read -p "Do you want to install MinIO? [y/n]: " setup_minio
-setup_minio=${setup_minio:-"y"}
-
-if [ "$setup_minio" == "y"]; then
-    echo
-    echo
-    read -p "Enter your MinIO User (without spaces) [adminitrator]: " minio_user
-
-    unset minio_password
-    charcount=0
-    prompt="Enter your MinIO password : "
-    while IFS= read -p "$prompt" -r -s -n 1 char
-    do
-        if [[ $char == $'\0' ]]
-        then
-            break
-        fi
-        if [[ $char == $'\177' ]] ; then
-            if [ $charcount -gt 0 ] ; then
-                charcount=$((charcount-1))
-                prompt=$'\b \b'
-                minio_password="${minio_password%?}"
-            else
-                prompt=''
-            fi
-        else
-            charcount=$((charcount+1))
-            prompt='*'
-            minio_password+="$char"
-        fi
-    done
-    echo
-fi
-
+echo
+read -p "Enter your MinIO User (without spaces) [adminitrator]: " minio_user
+echo
+unset minio_password
+#charcount=0
+read -p "Enter your MinIO password : " minio_password
+# while IFS= read -p "$promptminio_password" -r -s -n 1 char
+#     do
+#         if [[ $char == $'\0' ]]
+#         then
+#             break
+#         fi
+#         if [[ $char == $'\177' ]] ; then
+#             if [ $charcount -gt 0 ] ; then
+#                 charcount=$((charcount-1))
+#                 prompt=$'\b \b'
+#                 minio_password="${minio_password%?}"
+#             else
+#                 prompt=''
+#             fi
+#         else
+#             charcount=$((charcount+1))
+#             prompt='*'
+#             minio_password+="$char"
+#         fi
+#     done
+#     echo
+# fi
+echo
 echo "Configuring the docker-compose file for the user \"$username\" on \"$install_location\"..."
 # ============================================================================================
 
