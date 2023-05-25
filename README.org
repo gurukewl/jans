@@ -1,10 +1,4 @@
-#+title: YAMS: Yet Another Media Server
-
-@@html:<img src="https://visitor-badge.laobi.icu/badge?page_id=rogs.yams" alt="visitor badge"/>@@
-
-This is a highly opinionated media server.
-
-Website: [[https://yams.media][https://yams.media]]
+#+title: JANS: Just Another Network Server
 
 * Description
 :PROPERTIES:
