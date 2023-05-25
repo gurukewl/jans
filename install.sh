@@ -5,24 +5,19 @@ printf "\033c"
 echo "===================================================="
 echo ""                                                                                                 
 echo ""                                                                                                 
-echo "         JJJJJJJJJJJ           AAA               NNNNNNNN        NNNNNNNN   SSSSSSSSSSSSSSS  "
-echo "         J:::::::::J          A:::A              N:::::::N       N::::::N SS:::::::::::::::S " 
-echo "         J:::::::::J         A:::::A             N::::::::N      N::::::NS:::::SSSSSS::::::S "
-echo "         JJ:::::::JJ        A:::::::A            N:::::::::N     N::::::NS:::::S     SSSSSSS " 
-echo "           J:::::J         A:::::::::A           N::::::::::N    N::::::NS:::::S             "
-echo "           J:::::J        A:::::A:::::A          N:::::::::::N   N::::::NS:::::S             " 
-echo "           J:::::J       A:::::A A:::::A         N:::::::N::::N  N::::::N S::::SSSS          "
-echo "           J:::::j      A:::::A   A:::::A        N::::::N N::::N N::::::N  SS::::::SSSSS     "
-echo "           J:::::J     A:::::A     A:::::A       N::::::N  N::::N:::::::N    SSS::::::::SS   "
-echo "           JJJJJJJ    A:::::AAAAAAAAA:::::A      N::::::N   N:::::::::::N       SSSSSS::::S  "
-echo "           J:::::J   A:::::::::::::::::::::A     N::::::N    N::::::::::N            S:::::S "
-echo "           J::::::J A:::::AAAAAAAAAAAAA:::::A    N::::::N     N:::::::::N            S:::::S "
-echo " J:::::::JJJ::::::JA:::::A             A:::::A   N::::::N      N::::::::NSSSSSSS     S:::::S " 
-echo " JJ:::::::::::::J A:::::A               A:::::A  N::::::N       N:::::::NS::::::SSSSSS:::::S "
-echo "   JJ:::::::::JJ A:::::A                 A:::::A N::::::N        N::::::NS:::::::::::::::SS  "
-echo "     JJJJJJJJJ  AAAAAAA                   AAAAAAANNNNNNNN         NNNNNNN SSSSSSSSSSSSSSS    "
-echo ""                                                                                                                                                                                 
-echo ""                                                                                                                                                                                
+echo "  ▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄ ▄▄        ▄ ▄▄▄▄▄▄▄▄▄▄▄  "
+echo " ▐░░░░░░░░░░░▐░░░░░░░░░░░▐░░▌      ▐░▐░░░░░░░░░░░▌ "
+echo "  ▀▀▀▀▀█░█▀▀▀▐░█▀▀▀▀▀▀▀█░▐░▌░▌     ▐░▐░█▀▀▀▀▀▀▀▀▀  "
+echo "       ▐░▌   ▐░▌       ▐░▐░▌▐░▌    ▐░▐░▌           "
+echo "       ▐░▌   ▐░█▄▄▄▄▄▄▄█░▐░▌ ▐░▌   ▐░▐░█▄▄▄▄▄▄▄▄▄  "
+echo "       ▐░▌   ▐░░░░░░░░░░░▐░▌  ▐░▌  ▐░▐░░░░░░░░░░░▌ "
+echo "       ▐░▌   ▐░█▀▀▀▀▀▀▀█░▐░▌   ▐░▌ ▐░▌▀▀▀▀▀▀▀▀▀█░▌ "
+echo "       ▐░▌   ▐░▌       ▐░▐░▌    ▐░▌▐░▌         ▐░▌ "
+echo "  ▄▄▄▄▄█░▌   ▐░▌       ▐░▐░▌     ▐░▐░▌▄▄▄▄▄▄▄▄▄█░▌ "
+echo " ▐░░░░░░░▌   ▐░▌       ▐░▐░▌      ▐░░▐░░░░░░░░░░░▌ "
+echo "  ▀▀▀▀▀▀▀     ▀         ▀ ▀        ▀▀ ▀▀▀▀▀▀▀▀▀▀▀  "
+echo ""
+echo ""
 echo "===================================================="
 echo "Welcome to JANS(Just Another Network Server)"
 echo "Installation process should be really quick"
@@ -46,7 +41,7 @@ send_error_message() {
 
 # CHANGE_HOSTNAME="JANS"
 CHANGE_HOSTNAME="" 
-read -p "Where do you want to change HOSTNAME? [y/N]: " CHANGE_HOSTNAME
+read -p "Where do you want to change HOSTNAME? [y/n]: " CHANGE_HOSTNAME
 
 if [ "$CHANGE_HOSTNAME" == "y" ]; then
     read -p "Please input your desired HOSTNAME [jans]: " host_name
@@ -151,10 +146,10 @@ echo
 echo
 echo "Time to set up the MinIO in standalone mode."
 echo 
-read -p "Do you want to install MinIO? [Y/n]: " setup_minio
+read -p "Do you want to install MinIO? [y/n]: " setup_minio
 setup_minio=${setup_minio:-"y"}
 
-if [ "$setup_minio" == "Y"]||["$setup_minio" == "y" ]; then
+if [ "$setup_minio" == "y"]; then
     echo
     echo
     read -p "Enter your MinIO User (without spaces) [adminitrator]: " minio_user
@@ -230,7 +225,7 @@ chmod 666 /etc/hostname
 send_success_message "Everything installed correctly! 🎉"
 
 echo "Running the server..."
-echo "This is going to take a while... "
+echo "This is going to take a while...grab a cup of coffee :)"
 
 docker-compose -f "$filename" up -d
 # ============================================================================================
@@ -249,24 +244,19 @@ sudo chown -R "$puid":"$pgid" "$install_location"
 printf "\033c"
 echo "========================================================"
 echo ""
-echo ""                                                                                                                                                                           
-echo " DDDDDDDDDDDDD             OOOOOOOOO     NNNNNNNN        NNNNNNNNEEEEEEEEEEEEEEEEEEEEEE  "
-echo " D::::::::::::DDD        OO:::::::::OO   N:::::::N       N::::::NE::::::::::::::::::::E  "
-echo " D:::::::::::::::DD    OO:::::::::::::OO N::::::::N      N::::::NE::::::::::::::::::::E  "
-echo " DDD:::::DDDDD:::::D  O:::::::OOO:::::::ON:::::::::N     N::::::NEE::::::EEEEEEEEE::::E  "
-echo "   D:::::D    D:::::D O::::::O   O::::::ON::::::::::N    N::::::N  E:::::E       EEEEEE  "
-echo "   D:::::D     D:::::DO:::::O     O:::::ON:::::::::::N   N::::::N  E:::::E               "
-echo "   D:::::D     D:::::DO:::::O     O:::::ON:::::::N::::N  N::::::N  E::::::EEEEEEEEEE     "
-echo "   D:::::D     D:::::DO:::::O     O:::::ON::::::N N::::N N::::::N  E:::::::::::::::E     "
-echo "   D:::::D     D:::::DO:::::O     O:::::ON::::::N  N::::N:::::::N  E:::::::::::::::E     "
-echo "   D:::::D     D:::::DO:::::O     O:::::ON::::::N   N:::::::::::N  E::::::EEEEEEEEEE     "
-echo "   D:::::D     D:::::DO:::::O     O:::::ON::::::N    N::::::::::N  E:::::E               "
-echo "   D:::::D    D:::::D O::::::O   O::::::ON::::::N     N:::::::::N  E:::::E       EEEEEE  "
-echo " DDD:::::DDDDD:::::D  O:::::::OOO:::::::ON::::::N      N::::::::NEE::::::EEEEEEEE:::::E  "
-echo " D:::::::::::::::DD    OO:::::::::::::OO N::::::N       N:::::::NE::::::::::::::::::::E  "
-echo " D::::::::::::DDD        OO:::::::::OO   N::::::N        N::::::NE::::::::::::::::::::E  "
-echo " DDDDDDDDDDDDD             OOOOOOOOO     NNNNNNNN         NNNNNNNEEEEEEEEEEEEEEEEEEEEEE  "
-echo ""                                                                                      
+echo ""
+echo " ▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄ ▄▄        ▄ ▄▄▄▄▄▄▄▄▄▄▄  "
+echo "▐░░░░░░░░░░▌▐░░░░░░░░░░░▐░░▌      ▐░▐░░░░░░░░░░░▌ "
+echo "▐░█▀▀▀▀▀▀▀█░▐░█▀▀▀▀▀▀▀█░▐░▌░▌     ▐░▐░█▀▀▀▀▀▀▀▀▀  "
+echo "▐░▌       ▐░▐░▌       ▐░▐░▌▐░▌    ▐░▐░▌           "
+echo "▐░▌       ▐░▐░▌       ▐░▐░▌ ▐░▌   ▐░▐░█▄▄▄▄▄▄▄▄▄  "
+echo "▐░▌       ▐░▐░▌       ▐░▐░▌  ▐░▌  ▐░▐░░░░░░░░░░░▌ "
+echo "▐░▌       ▐░▐░▌       ▐░▐░▌   ▐░▌ ▐░▐░█▀▀▀▀▀▀▀▀▀  "
+echo "▐░▌       ▐░▐░▌       ▐░▐░▌    ▐░▌▐░▐░▌           "
+echo "▐░█▄▄▄▄▄▄▄█░▐░█▄▄▄▄▄▄▄█░▐░▌     ▐░▐░▐░█▄▄▄▄▄▄▄▄▄  "
+echo "▐░░░░░░░░░░▌▐░░░░░░░░░░░▐░▌      ▐░░▐░░░░░░░░░░░▌ "
+echo " ▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀ ▀        ▀▀ ▀▀▀▀▀▀▀▀▀▀▀  "
+echo ""
 echo ""
 echo "========================================================"
 send_success_message "All done!✅  Enjoy JANS!"
