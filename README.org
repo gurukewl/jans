@@ -65,7 +65,7 @@ Before installing, make sure you have:
   + ~/srv/media/books~: For your books
   + ~/srv/media/downloads~: For your torrent downloads
   + ~/srv/media/blackhole~: For your torrents blackhole
-  + ~/srv/media/data~: For your MinIO storage
+  + ~/srv/media/minio/data~: For your MinIO storage
 - *A regular user to run and own the media files*: You shouldn't use ~root~ for this user
 
 * To run
