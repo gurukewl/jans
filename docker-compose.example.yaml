@@ -181,7 +181,7 @@ services:
       MINIO_ROOT_USER: <minio_user>
       MINIO_ROOT_PASSWORD: <minio_password>
     volumes:
-      - <media_folder>/minio/data:/data
+      - <media_folder>/data:/data
     command: server --console-address ":9009" /data
     restart: unless-stopped
 
