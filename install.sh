@@ -78,9 +78,9 @@ running_services_location() {
     echo "Kavita: http://$host_ip:5500/"
     echo "Navidrome: http://$host_ip:4533/"
     echo "Jellyfin: http://$host_ip:8096/"
-#    if [ "$setup_minio" == "y" ]; then
-    echo "MinIO: https://$host_ip:9000/"
-#    fi
+    if [ "$setup_minio" == "y" ]; then
+      echo "MinIO: https://$host_ip:9009/"
+    fi
 }
 
 # ============================================================================================
@@ -142,35 +142,42 @@ media_service_port=8096
 
 # Adding the minio document store
 echo
-echo "Time to set up the MinIO in standalone mode."
 echo
-read -p "Enter your MinIO User (without spaces) [adminitrator]: " minio_user
 echo
-unset minio_password
-#charcount=0
-read -p "Enter your MinIO password : " minio_password
-# while IFS= read -p "$promptminio_password" -r -s -n 1 char
-#     do
-#         if [[ $char == $'\0' ]]
-#         then
-#             break
-#         fi
-#         if [[ $char == $'\177' ]] ; then
-#             if [ $charcount -gt 0 ] ; then
-#                 charcount=$((charcount-1))
-#                 prompt=$'\b \b'
-#                 minio_password="${minio_password%?}"
-#             else
-#                 prompt=''
-#             fi
-#         else
-#             charcount=$((charcount+1))
-#             prompt='*'
-#             minio_password+="$char"
-#         fi
-#     done
-#     echo
-# fi
+echo "Time to set up the MinIO Storage."
+read -p "Do you want to configure a MinIO? [Y/n]: " setup_minio
+setup_minio=${setup_minio:-"y"}
+
+if [ "$setup_minio" == "y" ]; then
+    echo
+    read -p "What's your desired minio username? (without spaces)[administrator]: " minio_user
+    minio_user=${minio_user:-"administrator"}
+    echo
+    unset minio_password
+    charcount=0
+    prompt="What's your minio password? (Atleast 10 characters in alphanumeric): "
+    while IFS= read -p "$prompt" -r -s -n 1 char
+    do
+        if [[ $char == $'\0' ]]
+        then
+            break
+        fi
+        if [[ $char == $'\177' ]] ; then
+            if [ $charcount -gt 0 ] ; then
+                charcount=$((charcount-1))
+                prompt=$'\b \b'
+                minio_password="${minio_password%?}"
+            else
+                prompt=''
+            fi
+        else
+            charcount=$((charcount+1))
+            prompt='*'
+            minio_password+="$char"
+        fi
+    done
+    echo
+fi
 echo
 echo "Configuring the docker-compose file for the user \"$username\" on \"$install_location\"..."
 # ============================================================================================
@@ -198,10 +205,10 @@ sed -i -e "s;<media_folder>;$media_folder;g" "$filename"
 sed -i -e "s;<install_location>;$install_location;g" "$filename"
 
 # Set minio
-#if [ "$setup_minio" == "y" ]; then
+if [ "$setup_minio" == "y" ]; then
     sed -i -e "s;<minio_user>;$minio_user;g" "$filename"
     sed -i -e "s;<minio_password>;$minio_password;g" "$filename"
-#fi
+fi
 
 # Set jans script
 sed -i -e "s;<filename>;$filename;g" jans
