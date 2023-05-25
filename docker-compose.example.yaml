@@ -182,7 +182,7 @@ services:
       MINIO_ROOT_PASSWORD: <minio_password>
     volumes:
       - <media_folder>/minio/data:/data
-    command: server --address ":9099" --console-address ":9009" /data
+    command: server --console-address ":9009" /data
     restart: unless-stopped
 
   # Portainer helps debugging and monitors the containers
