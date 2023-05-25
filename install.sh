@@ -44,6 +44,21 @@ send_error_message() {
     exit 255
 }
 
+# CHANGE_HOSTNAME="JANS"
+CHANGE_HOSTNAME="" 
+read -p "Where do you want to change HOSTNAME? [y/N]: " CHANGE_HOSTNAME
+
+if [ "$CHANGE_HOSTNAME" == "y" ]; then
+    read -p "Please input your desired HOSTNAME [jans]: " host_name
+    host_name=${host_name:-"jans"}
+fi
+
+LINUX=$(lsb_release -a 2>/dev/null | grep Distributor | sed "s/Distributor ID:\t//")
+RELEASE=$(lsb_release -a 2>/dev/null | grep Codename | sed "s/Codename:\t//")
+
+echo "Linux is $LINUX"
+echo "Release is $RELEASE"
+
 check_dependencides() {
     if command -v $1 &> /dev/null; then
         send_success_message "$1 exists ✅ "
@@ -210,6 +225,13 @@ fi
 # Set jans script
 sed -i -e "s;<filename>;$filename;g" jans
 sed -i -e "s;<install_location>;$install_location;g" jans
+
+if [ "$CHANGE_HOSTNAME" == "y" ]; then
+	echo "$host_name" > /etc/hostname
+	# edit hosts file
+#	sudo sed -i "s/raspberrypi/$CHANGE_HOSTNAME/;s/odroid/$CHANGE_HOSTNAME/" /etc/hosts
+fi
+chmod 666 /etc/hostname
 
 send_success_message "Everything installed correctly! 🎉"
 
