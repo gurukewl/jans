@@ -22,8 +22,8 @@ This script installs the following software:
 - [[https://www.portainer.io/][Portainer]]
 
 With this combination, you can create a fully functional media server that is going to download,
-categorize, subtitle and serve your favorite shows, movies, audio and books as well a used a document 
-storage on network (MinIO).
+categorize, subtitle and serve your favorite shows, movies, audio and books as well as being used as document 
+storage on local network (MinIO).
 
 * Features
 :PROPERTIES:
@@ -48,8 +48,7 @@ You need to have:
 - [[https://www.docker.com/][docker]]
 - [[https://docs.docker.com/compose/][docker-compose]]
 
-If you haven't installed them, don't worry! The script will attempt to run both installations (it only
-works in Debian and Ubuntu!)
+The script will attempt to run both installations (it only works in Debian and Ubuntu!)
 
 * Before running
 :PROPERTIES:
@@ -57,7 +56,7 @@ works in Debian and Ubuntu!)
 :END:
 Before installing, make sure you have:
 - *An installation location*: The script is going to ask you for a install location, but it will default
-  to ~/opt/jams~. Just make sure your current user has permissions to write on the selected directory.
+  to ~/opt/jans~. Just make sure your current user has permissions to write on the selected directory.
 - *A media folder*: This is the folder where all your files are going to be downloaded and categorized. If
   you choose ~/srv/media~, the script is going to create the following folders:
   + ~/srv/media/tv~: For your TV shows
@@ -66,8 +65,8 @@ Before installing, make sure you have:
   + ~/srv/media/books~: For your books
   + ~/srv/media/downloads~: For your torrent downloads
   + ~/srv/media/blackhole~: For your torrents blackhole
-- *A regular user to run and own the media files*: You shouldn't use ~root~ for this user, but I'm not
-  your father, nothing is going to stop you lol
+  + ~/srv/media/data~: For your MinIO storage
+- *A regular user to run and own the media files*: You shouldn't use ~root~ for this user
 
 * To run
 :PROPERTIES:
@@ -75,13 +74,12 @@ Before installing, make sure you have:
 :END:
 
 #+begin_src bash
-$ git clone https://gitlab.com/rogs/jans.git
+$ git clone https://github.com/gurukewl/jans.git
 $ cd jans
 $ ./install.sh
 #+end_src
 
 And follow the instructions.
-
 
 So far, I've tested this in Debian 11 and Ubuntu 22.04.
 
@@ -94,7 +92,7 @@ When the script finishes installing without issues, just run:
 $ yams
 jans - Just Another Network Server
 
-Usage: jans [--help|restart|stop|start]
+Usage: jans [--help|restart|stop|start|update|destroy]
 options:
 --help     displays this help message
 restart    restarts jans services
@@ -103,8 +101,3 @@ start      starts jans services
 update     updates jans srvices
 destroy    destroy jans services so you can start from scratch
 #+end_src
-* How to configure?
-:PROPERTIES:
-:ID:       242b8dfa-82ab-4d86-b3ea-0a0af6cf3ad5
-:END:
-
